@@ -4,12 +4,13 @@ void main() => runApp(const SignUpApp());
 
 class SignUpApp extends StatelessWidget {
   const SignUpApp();
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
         '/': (context) => const SignUpScreen(),
+        '/welcome' :(context) => const WelcomeScreen()
       },
     );
   }
@@ -17,7 +18,7 @@ class SignUpApp extends StatelessWidget {
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,7 @@ class SignUpScreen extends StatelessWidget {
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm();
-  
+
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
@@ -55,10 +56,7 @@ class _SignUpFormState extends State<SignUpForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           LinearProgressIndicator(value: _formProgress),
-          Text('Sign up', style: Theme
-              .of(context)
-              .textTheme
-              .headline4),
+          Text('Sign up', style: Theme.of(context).textTheme.headline4),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
@@ -82,17 +80,40 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           TextButton(
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled) ? null : Colors.white;
+              foregroundColor: MaterialStateProperty.resolveWith(
+                  (Set<MaterialState> states) {
+                return states.contains(MaterialState.disabled)
+                    ? null
+                    : Colors.white;
               }),
-              backgroundColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled) ? null : Colors.blue;
+              backgroundColor: MaterialStateProperty.resolveWith(
+                  (Set<MaterialState> states) {
+                return states.contains(MaterialState.disabled)
+                    ? null
+                    : Colors.blue;
               }),
             ),
-            onPressed: null,
+            onPressed: _showWelcomeScreen,
             child: const Text('Sign up'),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showWelcomeScreen() {
+    Navigator.of(context).pushNamed('/welcome');
+  }
+}
+
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('Welcome!', style: Theme.of(context).textTheme.headline2),
       ),
     );
   }
